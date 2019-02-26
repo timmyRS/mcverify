@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>mcverify demo</title>
+	<title>Demo for mcverify</title>
+	<link rel="stylesheet" href="https://cdn.hell.sh/uikit/3.0.3/uikit.css" integrity="sha384-lFY28ULhQ2AiqfvriJizDVK5iE52SU+KE2vWYnl8GiWLYrFdwK15ausceZU7vY+K" crossorigin="anonymous">
 </head>
-<body>
-	<h1>mcverify demo</h1>
-	<p>This is a demo for <a href="https://github.com/timmyrs/mcverify">mcverify</a> (hence the uglyness).</p>
-	<p id="info">Please enable Javascript.</p>
+<body class="uk-margin-left uk-margin-right">
+	<div class="uk-container">
+		<div class="uk-margin-top uk-margin-bottom">
+			<h1>Demo for <a href="https://github.com/timmyrs/mcverify">mcverify</a></h1>
+			<p id="info">Please enable Javascript.</p>
+		</div>
+	</div>
 	<script>
 		var info = document.getElementById("info");
 
@@ -46,7 +50,7 @@
 					setTimeout(function()
 					{
 						awaitCompletion(challenge, callback);
-					}, 3000);
+					}, 4000);
 				}
 			});
 		}
@@ -60,7 +64,7 @@
 				{
 					info.innerHTML = "Thanks, " + data.username + ". Your UUID is " + data.uuid + ".";
 				});
-			}, 5000);
+			}, 7000);
 		});
 	</script>
 </body>
