@@ -18,7 +18,7 @@ $mc_server->join_function = function($con)
 	{
 		$hostname = substr($hostname, 0, -1);
 	}
-	if(strlen($hostname) == strlen($domain) + $id_length + 1 && substr($hostname, (strlen($domain) * -1) - 1) == ".mcverify.de")
+	if(strlen($hostname) == strlen($domain) + $id_length + 1 && substr($hostname, (strlen($domain) * -1) - 1) == ".".$domain)
 	{
 		global $challenges;
 		$challenge = substr($hostname, 0, $id_length);
