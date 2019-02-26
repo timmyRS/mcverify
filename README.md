@@ -6,7 +6,7 @@ A simple REST API for linking your user's Minecraft: Java Edition accounts.
 
 ## Using the REST API
 
-You may use `https://api.mcverify.de/` but you obviously also set up your own instance.
+You may use `https://api.mcverify.de/` but you can obviously also set up your own instance.
 
 ### Starting a Challenge
 
