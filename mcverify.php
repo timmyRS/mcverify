@@ -87,7 +87,7 @@ do
 				$challenge = substr($con->read_buffer, 12, $id_length);
 				if(isset($challenges[$challenge]))
 				{
-					fwrite($stream, "HTTP/1.0 200\r\nContent-Type: application/json\r\n\r\n".$challenges[$challenge]["data"]);
+					fwrite($stream, "HTTP/1.0 200\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: application/json\r\n\r\n".$challenges[$challenge]["data"]);
 					$challenges[$challenge]["expiry"] = time() + 60;
 				}
 				else
@@ -113,7 +113,7 @@ do
 					"expiry" => time() + 60,
 					"data" => "{}"
 				];
-				fwrite($stream, "HTTP/1.0 200\r\nContent-Type: text/plain\r\n\r\n{$id}.{$domain}");
+				fwrite($stream, "HTTP/1.0 200\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/plain\r\n\r\n{$id}.{$domain}");
 				fflush($stream);
 			}
 			else if(substr($con->read_buffer, 0, 11) == "GET / HTTP/")
