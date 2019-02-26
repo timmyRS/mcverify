@@ -1,0 +1,5 @@
+{
+    "require": {
+        "timmyrs/phpcraft": "dev-master"
+    }
+}
