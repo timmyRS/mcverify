@@ -1,6 +1,6 @@
 # mcverify
 
-A simple REST API for linking your user's Minecraft: Java Edition accounts.
+A simple REST API for linking your user's Minecraft: Java Edition accounts. Powered by [Phpcraft](https://github.com/timmyrs/Phpcraft).
 
 [Try it!](https://mcverify.de/)
 
