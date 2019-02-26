@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>mcverify demo</title>
+</head>
+<body>
+	<h1>mcverify demo</h1>
+	<p>This is a demo for <a href="https://github.com/timmyrs/mcverify">mcverify</a> (hence the uglyness).</p>
+	<p id="info">Please enable Javascript.</p>
+	<script>
+		var info = document.getElementById("info");
+
+		info.innerHTML = "Wait just a moment...";
+
+		function sendRequest(path, callback)
+		{
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function()
+			{
+				if(xhr.readyState == 4)
+				{
+					if(xhr.status == 200)
+					{
+						callback(xhr.responseText);
+					}
+					else
+					{
+						alert("There was an unexpected issue.");
+					}
+				}
+			};
+			xhr.open("GET", path);
+			xhr.send();
+		}
+
+		function awaitCompletion(challenge, callback)
+		{
+			sendRequest("https://api.mcverify.de/status/" + challenge, function(res)
+			{
+				if(res != "{}")
+				{
+					callback(JSON.parse(res));
+				}
+				else
+				{
+					setTimeout(function()
+					{
+						awaitCompletion(challenge, callback);
+					}, 3000);
+				}
+			});
+		}
+
+		sendRequest("https://api.mcverify.de/start?service=the%20website", function(res)
+		{
+			info.innerHTML = "Start Minecraft (1.8 - 1.13.2) and \"Direct Connect\" to <b>" + res + "</b>.";
+			setTimeout(function()
+			{
+				awaitCompletion(res, function(data)
+				{
+					info.innerHTML = "Thanks, " + data.username + ". Your UUID is " + data.uuid + ".";
+				});
+			}, 5000);
+		});
+	</script>
+</body>
+</html>
