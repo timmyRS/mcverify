@@ -72,7 +72,7 @@ function str_rand($length)
 }
 
 $challenges = [];
-$next_cleanup = time() + 300;
+$next_cleanup = time() + 60;
 do
 {
 	$start = microtime(true);
