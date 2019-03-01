@@ -58,12 +58,13 @@
 		sendRequest("https://api.mcverify.de/start?service=the%20website", function(res)
 		{
 			var data = JSON.parse(res);
-			info.innerHTML = '<p>Start Minecraft <b>' + data.versions + '</b> and "Direct Connect" to</p><input type="text" value="' + data.address + '" readonly></b>.';
+			info.innerHTML = '<p>Start Minecraft <b>' + data.versions + '</b> and "Direct Connect" to</p><input type="text" class="uk-input" value="' + data.address + '" readonly></b>';
+			document.querySelector("input").select();
 			setTimeout(function()
 			{
-				awaitCompletion(res, function(data)
+				awaitCompletion(data.address, function(data)
 				{
-					info.innerHTML = "<h1>Thanks, " + data.username + "!</h1><p>Your UUID is " + data.uuid + ".</p>";
+					info.innerHTML = "<h3>Thanks, " + data.username + "!</h3><p>Your UUID is " + data.uuid + ".</p>";
 				});
 			}, 7000);
 		});
