@@ -113,7 +113,8 @@ do
 					"expiry" => time() + 60,
 					"data" => "{}"
 				];
-				fwrite($stream, "HTTP/1.0 200\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/plain\r\n\r\n{$id}.{$domain}");
+				$versions = \Phpcraft\Phpcraft::getSupportedMinecraftVersions();
+				fwrite($stream, "HTTP/1.0 200\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: application/json\r\n\r\n".json_encode(["address" => "{$id}.{$domain}", "versions" => $versions[count($versions) - 1]." - ".$versions[0]]));
 				fflush($stream);
 			}
 			else if(substr($con->read_buffer, 0, 11) == "GET / HTTP/")

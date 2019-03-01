@@ -8,7 +8,7 @@
 	<div class="uk-container">
 		<div class="uk-margin-top uk-margin-bottom">
 			<h1>Demo for <a href="https://github.com/timmyrs/mcverify">mcverify</a></h1>
-			<p id="info">Please enable Javascript.</p>
+			<div id="info"><p>Please enable Javascript.</p></div>
 		</div>
 	</div>
 	<script>
@@ -57,12 +57,13 @@
 
 		sendRequest("https://api.mcverify.de/start?service=the%20website", function(res)
 		{
-			info.innerHTML = "Start Minecraft (1.8 - 1.13.2) and \"Direct Connect\" to <b>" + res + "</b>.";
+			var data = JSON.parse(res);
+			info.innerHTML = '<p>Start Minecraft <b>' + data.versions + '</b> and "Direct Connect" to</p><input type="text" value="' + data.address + '" readonly></b>.';
 			setTimeout(function()
 			{
 				awaitCompletion(res, function(data)
 				{
-					info.innerHTML = "Thanks, " + data.username + ". Your UUID is " + data.uuid + ".";
+					info.innerHTML = "<h1>Thanks, " + data.username + "!</h1><p>Your UUID is " + data.uuid + ".</p>";
 				});
 			}, 7000);
 		});
