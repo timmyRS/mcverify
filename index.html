@@ -58,7 +58,7 @@
 		sendRequest("https://api.mcverify.de/start?service=the%20website", function(res)
 		{
 			var data = JSON.parse(res);
-			info.innerHTML = '<p>Start Minecraft <b>' + data.versions + '</b> and "Direct Connect" to</p><input type="text" class="uk-input" value="' + data.address + '" readonly></b>';
+			info.innerHTML = '<p>Start Minecraft (1.7.10 or above) and "Direct Connect" to</p><input type="text" class="uk-input" value="' + data.address + '" readonly></b>';
 			document.querySelector("input").select();
 			setTimeout(function()
 			{

@@ -29,7 +29,7 @@ $mc_server->join_function = function($con)
 				$challenges[$challenge]["expiry"] = time() + 60;
 				$challenges[$challenge]["data"] = json_encode([
 					"username" => $con->username,
-					"uuid" => $con->uuid
+					"uuid" => $con->uuid->toString(true)
 				]);
 				$con->disconnect(["text" => "Thanks! You may now return to ".$challenges[$challenge]["service"]."."]);
 			}
@@ -113,8 +113,7 @@ do
 					"expiry" => time() + 60,
 					"data" => "{}"
 				];
-				$versions = \Phpcraft\Phpcraft::getSupportedMinecraftVersions();
-				fwrite($stream, "HTTP/1.0 200\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: application/json\r\n\r\n".json_encode(["address" => "{$id}.{$domain}", "versions" => $versions[count($versions) - 1]." - ".$versions[0]]));
+				fwrite($stream, "HTTP/1.0 200\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: application/json\r\n\r\n".json_encode(["address" => "{$id}.{$domain}"]));
 				fflush($stream);
 			}
 			else if(substr($con->read_buffer, 0, 11) == "GET / HTTP/")

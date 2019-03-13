@@ -17,15 +17,14 @@ All endpoints respond using JSON (`application/json`).
 Starts a challenge for your user to fulfil. The service parameter is used in the kick message, e.g. "Thanks! You may now return to _service_."
 
 	{
-		"address": "abcd.mcverify.de", // The address the user is to connect to.
-		"versions": "1.8 - 1.13.2"     // The Minecraft version range that is supported.
+		"address": "abcd.mcverify.de" // The address the user is to connect to.
 	}
 
 ### Getting a Challenge's status
 
-    GET /status/...
+    GET /status/<address>
 
-Returns an empty object until the challenge was completed:
+Returns an empty object (`{}`) or, if a user had connected to the address, information about that user:
 
 	{
 		"username": "timmyRS",                         // The in-game name of the Minecraft account.
