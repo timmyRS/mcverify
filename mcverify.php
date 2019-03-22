@@ -10,7 +10,7 @@ $web_sock = stream_socket_server("tcp://0.0.0.0:80", $errno, $errstr) or die($er
 $mc_sock = stream_socket_server("tcp://0.0.0.0:25565", $errno, $errstr) or die($errstr."\n");
 $mc_priv = openssl_pkey_new(["private_key_bits" => 1024, "private_key_type" => OPENSSL_KEYTYPE_RSA]);
 $mc_server = new \Phpcraft\Server($mc_sock, $mc_priv);
-$mc_server->join_function = function($con)
+$mc_server->join_function = function(\Phpcraft\ClientConnection $con)
 {
 	global $id_length, $domain;
 	$hostname = $con->hostname;
@@ -48,7 +48,7 @@ $mc_server->join_function = function($con)
 		$con->disconnect(["text" => "Something's wrong."]);
 	}
 };
-$mc_server->list_ping_function = function($con)
+$mc_server->list_ping_function = function()
 {
 	global $domain;
 	return [
