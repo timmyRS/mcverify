@@ -1,7 +1,7 @@
 {
     "require": {
-        "timmyrs/phpcraft": "dev-master",
-		"ext-openssl": "*",
-		"ext-json": "*"
+    	"php": "^7.0",
+		"ext-openssl": "^7.0",
+        "timmyrs/phpcraft": "dev-master"
 	}
 }
