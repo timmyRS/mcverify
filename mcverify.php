@@ -3,14 +3,17 @@
 $id_length = 4;
 $domain = "mcverify.de";
 // Config Over.
-
 require "vendor/autoload.php";
-
+use Phpcraft\
+{ClientConnection, Connection, Phpcraft, Server};
 $web_sock = stream_socket_server("tcp://0.0.0.0:80", $errno, $errstr) or die($errstr."\n");
 $mc_sock = stream_socket_server("tcp://0.0.0.0:25565", $errno, $errstr) or die($errstr."\n");
-$mc_priv = openssl_pkey_new(["private_key_bits" => 1024, "private_key_type" => OPENSSL_KEYTYPE_RSA]);
-$mc_server = new \Phpcraft\Server($mc_sock, $mc_priv);
-$mc_server->join_function = function(\Phpcraft\ClientConnection $con)
+$mc_priv = openssl_pkey_new([
+	"private_key_bits" => 1024,
+	"private_key_type" => OPENSSL_KEYTYPE_RSA
+]);
+$mc_server = new Server($mc_sock, $mc_priv);
+$mc_server->join_function = function(ClientConnection $con)
 {
 	global $id_length, $domain;
 	$hostname = $con->hostname;
@@ -56,10 +59,9 @@ $mc_server->list_ping_function = function()
 			"name" => $domain,
 			"protocol" => -1337
 		],
-		"description" => \Phpcraft\Phpcraft::textToChat("This server is for verifying Minecraft accounts.\n§4§lDon't keep it.")
+		"description" => Phpcraft::textToChat("This server is for verifying Minecraft accounts.\n§4§lDon't keep it.")
 	];
 };
-
 function str_rand($length)
 {
 	$str = "";
@@ -79,7 +81,7 @@ do
 	while(($stream = @stream_socket_accept($web_sock, 0)) !== false)
 	{
 		stream_set_blocking($stream, false);
-		$con = new \Phpcraft\Connection(-1, $stream);
+		$con = new Connection(-1, $stream);
 		if($con->readRawPacket(1.000, 128))
 		{
 			if(substr($con->read_buffer, 0, 12) == "GET /status/")
