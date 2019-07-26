@@ -13,7 +13,7 @@ $mc_server = new \Phpcraft\Server($mc_sock, $mc_priv);
 $mc_server->join_function = function(\Phpcraft\ClientConnection $con)
 {
 	global $id_length, $domain;
-	$hostname = explode("\0", $con->hostname)[0];
+	$hostname = $con->hostname;
 	if(substr($hostname, -1) == ".")
 	{
 		$hostname = substr($hostname, 0, -1);
