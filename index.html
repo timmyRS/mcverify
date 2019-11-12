@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>Demo for mcverify</title>
 	<link rel="stylesheet" href="https://cdn.hell.sh/uikit/3.0.3/uikit.css" integrity="sha384-lFY28ULhQ2AiqfvriJizDVK5iE52SU+KE2vWYnl8GiWLYrFdwK15ausceZU7vY+K" crossorigin="anonymous">
@@ -12,26 +12,22 @@
 		</div>
 	</div>
 	<script>
-		var info = document.getElementById("info");
-
+		const info = document.getElementById("info");
 		info.innerHTML = "Wait just a moment...";
 
 		function sendRequest(path, callback)
 		{
-			var xhr = new XMLHttpRequest();
-			xhr.onreadystatechange = function()
+			const xhr = new XMLHttpRequest();
+			xhr.onload = function()
 			{
-				if(xhr.readyState == 4)
-				{
-					if(xhr.status == 200)
-					{
-						callback(xhr.responseText);
-					}
-					else
-					{
-						alert("There was an unexpected issue.");
-					}
-				}
+                if(xhr.status === 200)
+                {
+                    callback(xhr.responseText);
+                }
+                else
+                {
+                    alert("There was an unexpected issue.");
+                }
 			};
 			xhr.open("GET", path);
 			xhr.send();
@@ -41,7 +37,7 @@
 		{
 			sendRequest("https://api.mcverify.de/status/" + challenge, function(res)
 			{
-				if(res != "{}")
+				if(res !== "{}")
 				{
 					callback(JSON.parse(res));
 				}
@@ -57,8 +53,8 @@
 
 		sendRequest("https://api.mcverify.de/start?service=the%20website", function(res)
 		{
-			var data = JSON.parse(res);
-			info.innerHTML = '<p>Start Minecraft (1.7.10 or above) and "Direct Connect" to</p><input type="text" class="uk-input" value="' + data.address + '" readonly></b>';
+			const data = JSON.parse(res);
+			info.innerHTML = '<p>Start Minecraft (1.7.10 or above) and "Direct Connect" to</p><input type="text" class="uk-input" value="' + data.address + '" onfocus="this.select()" readonly></b>';
 			document.querySelector("input").select();
 			setTimeout(function()
 			{
