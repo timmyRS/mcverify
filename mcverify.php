@@ -6,6 +6,7 @@ $domain = "mcverify.de";
 require "vendor/autoload.php";
 use Phpcraft\
 {ClientConnection, Connection, Phpcraft, Server};
+use pas\pas;
 $web_sock = stream_socket_server("tcp://0.0.0.0:80", $errno, $errstr) or die($errstr."\n");
 $mc_sock = stream_socket_server("tcp://0.0.0.0:25565", $errno, $errstr) or die($errstr."\n");
 $mc_priv = openssl_pkey_new([
@@ -72,12 +73,10 @@ function str_rand($length)
 	}
 	return $str;
 }
-
 $challenges = [];
-$next_cleanup = time() + 60;
-do
+pas::add(function()
 {
-	$start = microtime(true);
+	global $domain, $id_length, $web_sock, $challenges;
 	while(($stream = @stream_socket_accept($web_sock, 0)) !== false)
 	{
 		stream_set_blocking($stream, false);
@@ -126,25 +125,19 @@ do
 		}
 		fclose($stream);
 	}
-	$mc_server->accept();
-	$mc_server->handle();
-	if(time() >= $next_cleanup)
+}, 0.001);
+pas::add(function()
+{
+	global $challenges;
+	$deleted = 0;
+	foreach($challenges as $i => $challenge)
 	{
-		$deleted = 0;
-		foreach($challenges as $i => $challenge)
+		if(time() >= $challenge["expiry"])
 		{
-			if(time() >= $challenge["expiry"])
-			{
-				unset($challenges[$i]);
-				$deleted++;
-			}
+			unset($challenges[$i]);
+			$deleted++;
 		}
-		echo "Deleted {$deleted} expired challenges.\n";
-		$next_cleanup = time() + 60;
 	}
-	if(($remaining = (0.020 - (microtime(true) - $start))) > 0)
-	{
-		time_nanosleep(0, $remaining * 1000000000);
-	}
-}
-while(true);
+	echo "Deleted {$deleted} expired challenges.\n";
+}, 60);
+pas::loop();
