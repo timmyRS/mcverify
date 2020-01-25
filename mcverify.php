@@ -6,7 +6,7 @@ $domain = "mcverify.de";
 require "vendor/autoload.php";
 use Phpcraft\
 {ClientConnection, Connection, Phpcraft, Server};
-use pas\pas;
+use Asyncore\Asyncore;
 $web_sock = stream_socket_server("tcp://0.0.0.0:80", $errno, $errstr) or die($errstr."\n");
 $mc_sock = stream_socket_server("tcp://0.0.0.0:25565", $errno, $errstr) or die($errstr."\n");
 $mc_priv = openssl_pkey_new([
@@ -74,7 +74,7 @@ function str_rand($length)
 	return $str;
 }
 $challenges = [];
-pas::add(function()
+Asyncore::add(function()
 {
 	global $domain, $id_length, $web_sock, $challenges;
 	while(($stream = @stream_socket_accept($web_sock, 0)) !== false)
@@ -126,7 +126,7 @@ pas::add(function()
 		fclose($stream);
 	}
 }, 0.001);
-pas::add(function()
+Asyncore::add(function()
 {
 	global $challenges;
 	$deleted = 0;
@@ -140,4 +140,4 @@ pas::add(function()
 	}
 	echo "Deleted {$deleted} expired challenges.\n";
 }, 60);
-pas::loop();
+Asyncore::loop();

@@ -3,6 +3,6 @@
     	"php": "^7.1",
 		"ext-json": "*",
 		"ext-openssl": "*",
-		"craft/core": "^0.2.4"
+		"craft/core": "^0.5"
 	}
 }
