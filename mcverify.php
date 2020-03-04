@@ -5,7 +5,7 @@ $domain = "mcverify.de";
 // Config Over.
 require "vendor/autoload.php";
 use Phpcraft\
-{ClientConnection, Connection, Phpcraft, Server};
+{ChatComponent, ClientConnection, Connection, Server};
 use Asyncore\Asyncore;
 $web_sock = stream_socket_server("tcp://0.0.0.0:80", $errno, $errstr) or die($errstr."\n");
 $mc_sock = stream_socket_server("tcp://0.0.0.0:25565", $errno, $errstr) or die($errstr."\n");
@@ -60,7 +60,7 @@ $mc_server->list_ping_function = function()
 			"name" => $domain,
 			"protocol" => -1337
 		],
-		"description" => Phpcraft::textToChat("This server is for verifying Minecraft accounts.\n§4§lDon't keep it.")
+		"description" => ChatComponent::text("This server is for verifying Minecraft accounts.\n§4§lDon't keep it.")->toArray()
 	];
 };
 function str_rand($length)
